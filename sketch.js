@@ -2,21 +2,25 @@ let maze;
 let player = new Player(230, 5, 25, 16)
 
 let playerImage;
+let spike;
 
 function preload() {
     maze = loadImage('assets/maze.png');
     playerImage = loadImage('assets/player.png');
+    spike = loadImage('assets/spike.png')
 }
 
 function setup() {
     createCanvas(484, 484)
     twitchClient();
+
 }
 
 function draw() {
     background(maze)
     player.display();
 
+    image(spike, 233, 465, 20, 20)
 
     if (keyIsPressed) {
         if (keyCode === LEFT_ARROW) {
