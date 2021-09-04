@@ -1,26 +1,27 @@
 let maze;
-let player = new Player(230, 5, 25, 16)
+let player = new Player(230, 5, 25, 16);
+let goal = new Goal(233, 465, 20);
+let flakes = [];
 
 let playerImage;
-let spike;
+let goalImage;
 
 function preload() {
     maze = loadImage('assets/maze.png');
     playerImage = loadImage('assets/player.png');
-    spike = loadImage('assets/spike.png')
+    goalImage = loadImage('assets/goal.png')
 }
 
 function setup() {
     createCanvas(484, 484)
     twitchClient();
-
 }
 
 function draw() {
+    noStroke()
     background(maze)
+    goal.display();
     player.display();
-
-    image(spike, 233, 465, 20, 20)
 
     if (keyIsPressed) {
         if (keyCode === LEFT_ARROW) {
@@ -37,6 +38,19 @@ function draw() {
 
         if (keyCode === DOWN_ARROW) {
             player.down();
+        }
+    }
+
+    if (player.x >= 230 && player.y >= 469) {
+        let t = frameCount / 60;
+        for (let i = 0; i < random(5); i++) {
+            flakes.push(new Flake()); // append snowflake object
+        }
+
+        // loop through snowflakes with a for..of loop
+        for (let flake of flakes) {
+            flake.update(t); // update snowflake position
+            flake.display(); // draw snowflake
         }
     }
 }
